@@ -35,8 +35,10 @@ class JdSpider(scrapy.Spider):
         else:
             print("获取商品id失败")
 
-        # while int(current_page) <= int(total_page):
-        #     current_page 
+        if current_page <= total_page:
+            new_page =  current_page + 1
+            new_url = response.url.replace(str(current_page), str(new_page))
+            yield scrapy.Request(url=new_url, callback=self.parse, dont_filter=True)
 
     def comment_parse(self, response):
         # Request URL: https://sclub.jd.com/comment/productPageComments.action?callback=fetchJSON_comment98vv1826&productId=100004049987&score=0&sortType=5&page=0&pageSize=10&isShadowSku=0&fold=1
